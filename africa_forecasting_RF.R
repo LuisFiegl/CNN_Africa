@@ -5,6 +5,7 @@ est_df = readRDS(paste0("./est_df.rds"))
 est_df = est_df %>%
   filter(year <=2020) %>%
   filter(year >2015) %>%
+  select(!ucdp_deaths_12) %>%
   mutate(obs_id = row_number())
 
 task = as_task_classif(est_df, target = "ucdp_12_bin", positive = "1")  
