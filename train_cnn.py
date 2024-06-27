@@ -40,10 +40,11 @@ full_matrix = np.transpose(full_matrix, (4, 3, 2, 1, 0))
 #%%
 #syria example matrix
 #full_matrix = np.load("D:/consulting/code_consulting/Africa/data/full_matrix.npy")
+#tabular_df = pd.read_csv('D:/consulting/code_consulting/Example Code/Example Code/data/cnn_est_df.csv')
 
 #%%
 #tabular prep
-train_tabular = tabular_df[(tabular_df["year"]<=2019)]
+train_tabular = tabular_df[(tabular_df["year"]<=2019) & (tabular_df["year"]>2015)]
 test_tabular = tabular_df[(tabular_df["year"]>2019)]
 
 train_tabular_x = train_tabular[["xcoord", "ycoord", "intersect_area", 
@@ -61,19 +62,20 @@ test_y = test_tabular[["ucdp_12_bin"]].to_numpy()[:,0]
 #%%
 
 #matrix prep
-train_matrix_x = full_matrix
+train_matrix_x = full_matrix[0:4]
 print(train_matrix_x.shape)
-test_matrix_x = full_matrix
+test_matrix_x = full_matrix[4:5]
 
-train_matrix_x = np.repeat(full_matrix[:, :,np.newaxis, :, :, :], train_tabular_x.shape[0]/full_matrix.shape[1], axis=1)
-print(train_matrix_x.shape)
-test_matrix_x = np.repeat(full_matrix[:, :,np.newaxis, :, :, :], test_tabular_x.shape[0]/full_matrix.shape[1], axis=1)
+#train_matrix_x = np.repeat(train_matrix_x[:, np.newaxis, :, :, :], train_tabular_x.shape[0]/full_matrix.shape[1], axis=1)
+train_matrix_x = np.repeat(train_matrix_x[:, np.newaxis, :, :, :], 12, axis=1)
+test_matrix_x = np.repeat(test_matrix_x[:, np.newaxis, :, :, :], test_tabular_x.shape[0]/full_matrix.shape[1], axis=1)
+print(test_matrix_x.shape)
 
 #%%
-train_matrix_x = train_matrix_x.reshape(train_matrix_x.shape[0]*train_matrix_x.shape[1],
-                      train_matrix_x.shape[2], train_matrix_x.shape[3], train_matrix_x.shape[4])
-test_matrix_x = test_matrix_x.reshape(test_matrix_x.shape[0]*test_matrix_x.shape[1],
-                      test_matrix_x.shape[2], test_matrix_x.shape[3], test_matrix_x.shape[4])
+train_matrix_x = train_matrix_x.reshape(train_matrix_x.shape[0]*train_matrix_x.shape[1]*train_matrix_x.shape[2],
+                      train_matrix_x.shape[3], train_matrix_x.shape[4], train_matrix_x.shape[5])
+test_matrix_x = test_matrix_x.reshape(test_matrix_x.shape[0]*test_matrix_x.shape[1]*test_matrix_x.shape[2],
+                      test_matrix_x.shape[3], test_matrix_x.shape[4], test_matrix_x.shape[5])
 
 #%%
 #################
@@ -85,7 +87,7 @@ random.seed(10)
 np.random.seed(10)
 tf.random.set_seed(10)
 
-inputs_image = keras.Input(shape=(grid_size,grid_size,10)) 
+inputs_image = keras.Input(shape=(grid_size,grid_size,11)) 
 x_img = layers.Conv2D(16, kernel_size=(3, 3), activation="relu")(inputs_image) 
 x_img = layers.Conv2D(16, kernel_size=(3, 3), activation="relu")(x_img) 
 x_img = layers.Conv2D(32, kernel_size=(3, 3), activation="relu")(x_img) 
