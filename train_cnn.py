@@ -44,7 +44,7 @@ full_matrix = np.transpose(full_matrix, (4, 3, 2, 1, 0))
 
 #%%
 #tabular prep
-train_tabular = tabular_df[(tabular_df["year"]<=2019) & (tabular_df["year"]>2015)]
+train_tabular = tabular_df[(tabular_df["year"]<=2019) & (tabular_df["year"]>2017)]
 test_tabular = tabular_df[(tabular_df["year"]>2019)]
 
 train_tabular_x = train_tabular[["xcoord", "ycoord", "intersect_area", 
@@ -62,7 +62,7 @@ test_y = test_tabular[["ucdp_12_bin"]].to_numpy()[:,0]
 #%%
 
 #matrix prep
-train_matrix_x = full_matrix[0:4]
+train_matrix_x = full_matrix[2:4]
 print(train_matrix_x.shape)
 test_matrix_x = full_matrix[4:5]
 
@@ -103,13 +103,11 @@ x_tab = layers.Dense(16, activation="relu")(x_tab)
 x_tab = layers.Dropout(0.5)(x_tab) 
 # x_tab = layers.Dense(16, activation="relu")(x_tab)
 # x_tab = layers.Dropout(0.5)(x_tab) 
-print("hi before")
 print(x_tab.shape)
 print(x_img.shape)
 
 x = layers.concatenate([x_img, x_tab])
 print(x.shape)
-print("hi")
 
 x = layers.Dense(256, activation="relu")(x) #out
 x = layers.Dropout(0.5)(x) #out
@@ -200,5 +198,9 @@ plt.legend(['train', 'val'], loc='upper left')
 plt.show()
 
 
+
+
+
+# %%
 
 
