@@ -48,15 +48,15 @@ train_tabular = tabular_df[(tabular_df["year"]<=2019) & (tabular_df["year"]>2015
 test_tabular = tabular_df[(tabular_df["year"]>2019)]
 
 old_features = ["xcoord", "ycoord", "intersect_area", "ucdp_deaths_12_lag_1", "ucdp_deaths_12_lag_12", "ucdp_deaths_12_lag_24", "ucdp_deaths_12_neighbour_lag_1", "ucdp_deaths_12_neighbour_lag_12", "ucdp_deaths_12_neighbour_lag_24", "ucdp_12_conflict_since", "ucdp_12_neighbour_conflict_since"]
+features_to_drop = ['year', 'month', 'ucdp_12_bin', 'ucdp_deaths_12', 'id']
 
-features_to_drop = ['year', 'month', 'ucdp_12_bin', 'ucdp_deaths_12', 'id', 'lag_pop', 'lag_rainfall', 'lag_nighttimes','lag_landcover_missing', 'lag_landcover_grass_shrub','lag_landcover_crop', 'lag_landcover_built', 'lag_landcover_water','lag_landcover_tree', 'lag_landcover_sea', 'lag_landcover_bare']
 new_features = train_tabular.columns.difference(features_to_drop)
 
-train_tabular_x = train_tabular[new_features].to_numpy()
+train_tabular_x = train_tabular[old_features].to_numpy()
 train_y = train_tabular[["ucdp_12_bin"]].to_numpy()[:,0]
 
 
-test_tabular_x = test_tabular[new_features].to_numpy()
+test_tabular_x = test_tabular[old_features].to_numpy()
 
 test_y = test_tabular[["ucdp_12_bin"]].to_numpy()[:,0]
 
@@ -82,32 +82,17 @@ test_matrix_x = test_matrix_x.reshape(test_matrix_x.shape[0]*test_matrix_x.shape
 #################
 #CNN training
 #################
-grid_size = 25
+random.seed(12)
+np.random.seed(12)
+tf.random.set_seed(12)
 
-random.seed(10)
-np.random.seed(10)
-tf.random.set_seed(10)
-
-inputs_image = keras.Input(shape=(grid_size,grid_size,11)) 
-x_img = layers.Conv2D(16, kernel_size=(3, 3), activation="relu")(inputs_image) 
-x_img = layers.Conv2D(16, kernel_size=(3, 3), activation="relu")(x_img) 
-x_img = layers.Conv2D(32, kernel_size=(3, 3), activation="relu")(x_img) 
-#x_img = layers.Conv2D(128, kernel_size=(3, 3), activation="relu")(x_img) 
-x_img = layers.GlobalAveragePooling2D()(x_img)
-x_img = layers.Dropout(0.5)(x_img) 
-x_img = layers.Flatten()(x_img)
-
-inputs_tab = keras.Input(shape=(len(new_features),))
-x_tab = layers.Dense(16, activation="relu")(inputs_tab) 
-x_tab = layers.Dropout(0.5)(x_tab)
-x_tab = layers.Dense(16, activation="relu")(x_tab) 
-x_tab = layers.Dropout(0.5)(x_tab) 
+inputs_tab = keras.Input(shape=(11,))
+x = layers.Dense(16, activation="relu")(inputs_tab) 
+x = layers.Dropout(0.5)(x)
+x = layers.Dense(16, activation="relu")(x) 
+x = layers.Dropout(0.5)(x) 
 # x_tab = layers.Dense(16, activation="relu")(x_tab)
 # x_tab = layers.Dropout(0.5)(x_tab) 
-print(x_tab.shape)
-print(x_img.shape)
-
-x = layers.concatenate([x_img, x_tab])
 print(x.shape)
 
 x = layers.Dense(256, activation="relu")(x) #out
@@ -120,11 +105,11 @@ x = layers.Dropout(0.5)(x) #out
 #x = layers.Dropout(0.5)(x) 
 x = layers.Dense(128, activation="relu")(x) #32
 outputs = layers.Dense(1, activation="sigmoid")(x)
-model = keras.Model(inputs=[inputs_image, inputs_tab], outputs=outputs)
+model = keras.Model(inputs=inputs_tab, outputs=outputs)
 model.summary()
 
-batch_size = 256 #128 we tried putting it to 3000
-epochs = 100 #100
+batch_size = 256 #128 256
+epochs = 300 #100
 
 optimizer = keras.optimizers.Adam(
 	learning_rate=0.001, #5
@@ -151,8 +136,8 @@ model.compile(loss="binary_crossentropy", optimizer=optimizer,  #adam
 #     mode='max'
 #     )
 
-history = model.fit([train_matrix_x, train_tabular_x], train_y, batch_size=batch_size, epochs=epochs, verbose=2,
-           validation_data=([test_matrix_x, test_tabular_x], test_y))
+history = model.fit(train_tabular_x, train_y, batch_size=batch_size, epochs=epochs, verbose=2,
+           validation_data=(test_tabular_x, test_y))
 
 #%%
 
