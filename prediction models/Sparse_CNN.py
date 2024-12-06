@@ -5,7 +5,7 @@ Created on Thu Nov 17 17:43:59 2022
 
 @author: ru79seh
 """
-import structuredconvREAL
+#import structuredconvREAL (not realeased)
 
 import numpy as np
 # from tensorflow import keras
