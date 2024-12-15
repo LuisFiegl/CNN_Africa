@@ -30,6 +30,6 @@ Contains files which we used to analyze our fatality data and create various plo
 This folder contains the models we used for our predictions. The RF in *random_forest.R* was implemented in R, using the *mlr3* framework. We implemented our CNN architecture in **Python** using the **Keras** library. Everything regarding the CNN is done in one file called *CNN.py*.
 
 The architecture for the Sparse CNN is accessible in file *Sparse_CNN.py*, and its architecture is the same as the one we used for the standard CNN. The only thing that changed is that we introduce sparsity in the first convolutional layer. This is done with the function **SparseConv2D(filters=16, kernel size=(3,3), lam=0.0001).** The function introduces grouped sparsity as proposed in Kolb et al. (2024). Also note that for the Sparse CNN a **Keras version of 2.x** has to be used, since the function was only available for this Keras version for us. The code
-of *Sparse_CNN.py* therefore differs a bit to the code for the standard CNN in *CNN.py*, which works on Keras **version 3.x.**. The file *SparseCNN_scaled_matrix.py* contains the Sparse CNN fitted on the transformed/scaled *remote sensing feature matrix*.
+of *Sparse_CNN.py* therefore differs a bit to the code for the standard CNN in *CNN.py*, which works on **Keras version 3.x.** The file *SparseCNN_scaled_matrix.py* contains the Sparse CNN fitted on the transformed/scaled *remote sensing feature matrix*.
 
 Additionally, we contain code to fit a standard DNN in *DNN.py*.
