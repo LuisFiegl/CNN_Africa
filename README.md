@@ -11,3 +11,8 @@ models can enhance prediction accuracy by utilizing spatial information.
 This repository contains all the code for the Statistical Consulting Project **Conflict Forecasting in Africa using Remote Sensing Data** at LMU Munich by Luis Fiegl and Ali Najibpour Nashi.
 
 Due to our datasets (especially the Remote Sensing Feature Matrix) being too big, they are not contained in this repository. The files in folder **data_preparation** can be used to create all data which is used in the analysis.
+
+We implemented our CNN architecture in **Python** using the **Keras** library. Everything
+regarding the CNN is done in one file called CNN.py
+
+The architecture for the Sparse CNN is accessible in file Sparse CNN.py, and its the architecture is the same as the one we used for the standard CNN.
