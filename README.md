@@ -2,7 +2,7 @@ For many years, conflict prediction has been a fascinating subject. To develop
 early warning systems, researchers are employing statistical and mathematical methods to find conflict patterns in data. Particularly following the emergence of **spatial
 data** from satellites (remote sensing data) and various machine learning techniques
 suited to handle data of such complexity. In this project, we utilized such data to
-predict violent conflicts for the entire continent of Africa. We aimed to extend pre-
+predict violent conflicts for the entire continent of Africa. We aimed to extend pre
 vious approaches by using **Convolutional Neural Networks (CNNs)** and **Sparse Con-
 volutional Neural Networks (Sparce CNNs)**, to determine whether Deep Learning
 models can enhance prediction accuracy by utilizing spatial information.
