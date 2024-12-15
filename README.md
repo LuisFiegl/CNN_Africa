@@ -13,7 +13,7 @@ The *remote sensing feature matrix* mentioned in the report is not available, be
 
 ## Data Preparation
 For replication, the paths to the data must be adjusted in every file. The files can be executed in the following order:
-- *prepare_cell_polygons.R: Creates all cells of Africa *africa_cell_polygons.rds*
+- *prepare_cell_polygons.R*: Creates all cells of Africa *africa_cell_polygons.rds*
 - *prepare_eventdata.R*: Creates fatality data (matched to cells) *tabular_df.rds*
 - *match_population_africa.R*: Matches cells to population data
 - *match_rainfall_africa.R*: Matches cells to rainfall data
