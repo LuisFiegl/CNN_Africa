@@ -9,7 +9,7 @@ For many years, conflict prediction has been a fascinating subject. To develop e
 ## Data
 *est_df.rds* represents the *tabular dataset*. It is available and doesnt have to be created. It can be used right away to fit the Random Forest (RF).
 
-The *remote sensing feature matrix* mentioned in the report is not available, because it would take up too much storage space. The files in folder **data_preparation** can be used to create it. Still, the remote sensing data has to be downloaded in advance!
+The *remote sensing feature matrix* mentioned in the report is not available, because it would take up too much storage space. The files in folder **data_preparation** can be used to create it. To download the necessary data for that, refer to Electronic appendix B in the [report](https://drive.google.com/drive/folders/1lDDNRQymG_GIfyfR11VdzBnzfWMKmDkM?usp=sharing).
 
 ## Data Preparation
 For replication, the paths to the data must be adjusted in every file. The files can be executed in the following order:
