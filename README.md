@@ -5,10 +5,7 @@ suited to handle data of such complexity. In this project, we utilized such data
 predict violent conflicts for the entire continent of Africa. We aimed to extend pre-
 vious approaches by using **Convolutional Neural Networks (CNNs)** and **Sparse Con-
 volutional Neural Networks (Sparce CNNs)**, to determine whether Deep Learning
-models can enhance prediction accuracy by utilizing spatial information. Thereby,
-we examined the importance of remote sensing data for conflict prediction. Addi-
-tionally, this project seeks to address issues that may arise in related research in
-the future.
+models can enhance prediction accuracy by utilizing spatial information.
 
 
 This repository contains all the code for the Statistical Consulting Project *Conflict Forecasting in Africa using Remote Sensing Data* at LMU Munich by Luis Fiegl and Ali Najibpour Nashi.
