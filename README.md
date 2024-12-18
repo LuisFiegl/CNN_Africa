@@ -33,3 +33,5 @@ The architecture for the Sparse CNN is accessible in file *Sparse_CNN.py*, and i
 of *Sparse_CNN.py* therefore differs a bit to the code for the standard CNN in *CNN.py*, which works on **Keras version 3.x.** The file *SparseCNN_scaled_matrix.py* contains the Sparse CNN fitted on the transformed/scaled *remote sensing feature matrix*.
 
 Additionally, we contain code to fit a standard DNN in *DNN.py*.
+
+This repository also include a *requirements.txt* file which contains the used packages for *CNN.py* and *DNN.py*.
